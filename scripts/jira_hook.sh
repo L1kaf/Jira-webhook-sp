@@ -12,6 +12,10 @@ PARENT_KEY=$(curl -s -H "Authorization: Bearer $JIRA_API_TOKEN" \
 
 if [ "$PARENT_KEY" == "null" ] || [ -z "$PARENT_KEY" ]; then
   echo "Задача $ISSUE_KEY не является подзадачей" >> $LOG_FILE
+  echo -e "Status: 200 OK\r"
+  echo -e "Content-Type: text/plain\r"
+  echo -e "\r"
+  echo -e "Webhook received and logged."
   exit 0
 fi
 
@@ -45,6 +49,10 @@ echo "Текущее значение SP родителя: $CURRENT_SP" >> $LOG_
 # Если SP совпадает — ничего не делаем
 if [[ "$CURRENT_SP" == "$TOTAL_SP" ]]; then
   echo "SP уже актуальны, изменений не требуется" >> $LOG_FILE
+  echo -e "Status: 200 OK\r"
+  echo -e "Content-Type: text/plain\r"
+  echo -e "\r"
+  echo -e "Webhook received and logged."
   exit 0
 fi
 
